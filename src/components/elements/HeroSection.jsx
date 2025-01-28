@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Button } from "../ui/button";
 
 const HeroSection = () => {
 	return (
@@ -6,28 +7,32 @@ const HeroSection = () => {
 			className="relative h-screen w-full bg-cover bg-center"
 			style={{ backgroundImage: `url('/heroImage.jpg')` }}>
 			<div className="absolute inset-0 bg-black bg-opacity-50"></div>
-			<div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
+			<div className="relative z-10 flex flex-col items-start justify-center h-full text-white px-4">
 				<motion.h1
-					className="text-4xl md:text-6xl font-bold mb-4"
+					className="text-6xl font-bold mb-4 "
 					initial={{ opacity: 0, y: -50 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.8 }}>
-					Welcome to Our Website
+					Waroengku
 				</motion.h1>
 				<motion.p
 					className="text-lg md:text-xl mb-6"
 					initial={{ opacity: 0, y: 50 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.8, delay: 0.2 }}>
-					Discover amazing content and connect with us today.
+					<b>Waroengku</b> hadir untuk memenuhi segala kebutuhan Anda! Kami menyediakan beragam
+					barang berkualitas yang mungkin sedang Anda cari dan butuhkan saat ini. Temukan solusi
+					belanja praktis dan terpercaya hanya di Waroengku!
 				</motion.p>
 				<motion.div
 					initial={{ opacity: 0, scale: 0.8 }}
 					animate={{ opacity: 1, scale: 1 }}
 					transition={{ duration: 0.8, delay: 0.4 }}>
-					<button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-lg">
-						Get Started
-					</button>
+					<Button
+						size="lg"
+						className="py-6 rounded-full text-lg font-semibiold bg-transparent border">
+						Lihat Barang
+					</Button>
 				</motion.div>
 			</div>
 		</div>
