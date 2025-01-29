@@ -1,48 +1,12 @@
-import Navbar from "@/components/elements/Navbar";
-import HeroSection from "@/components/elements/HeroSection";
-import ProductSection from "@/components/elements/ProductSection";
-import Footer from "../elements/Footer";
+import Navbar from "@/components/elements/homepage/Navbar";
+import HeroSection from "@/components/elements/homepage/HeroSection";
+import ProductSection from "@/components/elements/homepage/ProductSection";
+import Footer from "@/components/elements/homepage/Footer";
+import AboutSection from "@/components/elements/homepage/AboutSection";
+import ServiceSection from "@/components/elements/homepage/ServiceSection";
+import ScrollToTopButton from "../elements/ScrollToTopButton";
 
-const products = [
-	{
-		id: 1,
-		name: "Product 1",
-		price: 10000,
-		img: "https://vignette.vivathemes.com/wp-content/uploads/2022/10/olena-sergienko-gxKL334bUK4-unsplash-800x800.jpg",
-	},
-	{
-		id: 2,
-		name: "Product 2",
-		price: 20000,
-		img: "https://vignette.vivathemes.com/wp-content/uploads/2022/10/olena-sergienko-gxKL334bUK4-unsplash-800x800.jpg",
-	},
-	{
-		id: 3,
-		name: "Product 2",
-		price: 20000,
-		img: "https://vignette.vivathemes.com/wp-content/uploads/2022/10/olena-sergienko-gxKL334bUK4-unsplash-800x800.jpg",
-	},
-	{
-		id: 4,
-		name: "Product 2",
-		price: 20000,
-		img: "https://vignette.vivathemes.com/wp-content/uploads/2022/10/olena-sergienko-gxKL334bUK4-unsplash-800x800.jpg",
-	},
-	{
-		id: 5,
-		name: "Product 2",
-		price: 20000,
-		img: "https://vignette.vivathemes.com/wp-content/uploads/2022/10/olena-sergienko-gxKL334bUK4-unsplash-800x800.jpg",
-	},
-	{
-		id: 6,
-		name: "Product 2",
-		price: 20000,
-		img: "https://vignette.vivathemes.com/wp-content/uploads/2022/10/olena-sergienko-gxKL334bUK4-unsplash-800x800.jpg",
-	},
-];
-
-export default function HomePage() {
+export default function HomePage({ products, services }) {
 	return (
 		<>
 			{/* NAVBAR */}
@@ -53,13 +17,25 @@ export default function HomePage() {
 			<HeroSection />
 			{/* END HERO SECTION */}
 
+			{/* ABOUT */}
+			<AboutSection />
+			{/* END ABOUT */}
+
 			{/* PRODUCTS */}
 			<ProductSection products={products} />
 			{/* END PRODUCTS */}
 
+			{/* SERVICE */}
+			<ServiceSection services={services} />
+			{/* END SERVICE */}
+
 			{/* FOOTER */}
 			<Footer />
 			{/* END FOOTER */}
+
+			{/* Back to Top Button */}
+			<ScrollToTopButton />
+			{/* end Back to Top Button */}
 		</>
 	);
 }
