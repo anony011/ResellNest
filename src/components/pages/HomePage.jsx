@@ -3,7 +3,6 @@ import HeroSection from "@/components/elements/homepage/HeroSection";
 import ProductSection from "@/components/elements/homepage/ProductSection";
 import Footer from "@/components/elements/homepage/Footer";
 import AboutSection from "@/components/elements/homepage/AboutSection";
-import ServiceSection from "@/components/elements/homepage/ServiceSection";
 import ScrollToTopButton from "../elements/ScrollToTopButton";
 
 export default function HomePage({ products, services }) {
@@ -22,12 +21,10 @@ export default function HomePage({ products, services }) {
 			{/* END ABOUT */}
 
 			{/* PRODUCTS */}
-			<ProductSection products={products} />
+			<div id="product">
+				<ProductSection products={products} />
+			</div>
 			{/* END PRODUCTS */}
-
-			{/* SERVICE */}
-			<ServiceSection services={services} />
-			{/* END SERVICE */}
 
 			{/* FOOTER */}
 			<Footer />

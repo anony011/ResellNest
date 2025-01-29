@@ -2,6 +2,13 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 const HeroSection = () => {
+	const scrollToProduct = () => {
+		const productSection = document.getElementById("product");
+		if (productSection) {
+			productSection.scrollIntoView({ behavior: "smooth" });
+		}
+	};
+
 	return (
 		<div
 			className="relative h-screen w-full bg-cover bg-center"
@@ -27,9 +34,11 @@ const HeroSection = () => {
 				<motion.div
 					initial={{ opacity: 0, scale: 0.8 }}
 					animate={{ opacity: 1, scale: 1 }}
+					whileTap={{ scale: 0.97 }}
 					transition={{ duration: 0.8, delay: 0.4 }}>
 					<Button
 						size="lg"
+						onClick={scrollToProduct}
 						className="py-6 rounded-full text-lg font-semibiold bg-transparent border">
 						Lihat Barang
 					</Button>

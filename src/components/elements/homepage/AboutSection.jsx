@@ -16,7 +16,7 @@ const AboutSection = () => {
 			{/* Background Image dengan Paralax */}
 			<motion.div style={{ y: yBg }} className="absolute inset-0 z-0">
 				<img
-					src="./heroImage.jpg" // Ganti dengan gambar Anda
+					src="./heroImage.jpg"
 					alt="About background"
 					className="w-full h-full object-cover object-center"
 				/>
