@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isScrolled, setIsScrolled] = useState(false);
+
 	const scrollToProduct = () => {
 		const productSection = document.getElementById("product");
 		if (productSection) {
@@ -10,66 +11,58 @@ const Navbar = () => {
 		}
 	};
 
-	return (
-		<nav className="fixed top-0 left-0 w-full bg-transparent bg-opacity-70 text-white p-4 pt-10 flex justify-between items-center z-20">
-			<button className="text-white text-2xl md:hidden" onClick={() => setIsOpen(!isOpen)}>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					fill="none"
-					viewBox="0 0 24 24"
-					strokeWidth={2}
-					stroke="currentColor"
-					className="size-8">
-					<path
-						strokeLinecap="round"
-						strokeLinejoin="round"
-						d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-					/>
-				</svg>
-			</button>
-			<div className="hidden md:flex space-x-6">
-				<a href="#" className="hover:underline">
-					Home
-				</a>
-				<a href="#" className="hover:underline">
-					About
-				</a>
-				<a href="#" className="hover:underline">
-					Services
-				</a>
-				<a href="#" className="hover:underline">
-					Contact
-				</a>
-			</div>
+	// Efek untuk mendeteksi scroll
+	useEffect(() => {
+		const handleScroll = () => {
+			if (window.scrollY > window.innerHeight) {
+				setIsScrolled(true);
+			} else {
+				setIsScrolled(false);
+			}
+		};
 
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, []);
+
+	return (
+		<nav
+			className={`fixed top-0 left-0 w-full ${
+				isScrolled
+					? "backdrop-blur-md bg-opacity-70 bg-black pt-5 rounded-b-lg justify-between"
+					: "bg-transparent pt-10 justify-end"
+			} text-white p-4 flex items-center z-20 transition-all duration-300`}>
+			<p className={`${isScrolled ? "flex" : "hidden "} font-semibold`}>Waroengku</p>
+			{/* Ikon User dan Keranjang */}
 			<span className="flex gap-3 items-center justify-center">
-				{/* users */}
-				<div className="">
+				{/* Ikon User */}
+				<Link className="hover:scale-110 transition-transform duration-200" to={"/login"}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
 						strokeWidth={2}
 						stroke="currentColor"
-						className="size-8">
+						className="size-6">
 						<path
 							strokeLinecap="round"
 							strokeLinejoin="round"
 							d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
 						/>
 					</svg>
-				</div>
-				{/* end users */}
+				</Link>
 
-				{/* keranjang */}
-				<button onClick={scrollToProduct}>
+				{/* Ikon Keranjang */}
+				<button
+					onClick={scrollToProduct}
+					className="hover:scale-110 transition-transform duration-200">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
 						strokeWidth={2}
 						stroke="currentColor"
-						className="size-8">
+						className="size-6">
 						<path
 							strokeLinecap="round"
 							strokeLinejoin="round"
@@ -77,32 +70,7 @@ const Navbar = () => {
 						/>
 					</svg>
 				</button>
-				{/* end keranjang */}
 			</span>
-
-			<motion.div
-				className={`fixed top-0 left-0 h-full w-64 bg-black text-white flex flex-col items-center space-y-6 py-10 shadow-lg ${
-					isOpen ? "block" : "hidden"
-				}`}
-				initial={{ x: "-100%" }}
-				animate={{ x: isOpen ? "0%" : "-100%" }}
-				transition={{ duration: 0.5 }}>
-				<button className="self-end mr-6 text-2xl" onClick={() => setIsOpen(false)}>
-					&times;
-				</button>
-				<a href="#" className="hover:underline text-lg">
-					Home
-				</a>
-				<a href="#" className="hover:underline text-lg">
-					About
-				</a>
-				<a href="#" className="hover:underline text-lg">
-					Services
-				</a>
-				<a href="#" className="hover:underline text-lg">
-					Contact
-				</a>
-			</motion.div>
 		</nav>
 	);
 };

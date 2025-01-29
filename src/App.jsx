@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./components/pages/HomePage";
 import ProductsPage from "./components/pages/ProductsPage";
 import ProductDetail from "./components/pages/DetailsProductPage";
+import LoginPage from "./components/pages/LoginPage";
+import NotFoundPage from "./components/pages/NotFoundPage";
 
 const products = [
 	{
@@ -67,6 +69,9 @@ function App() {
 				<Route path="/" element={<HomePage products={products} services={services} />} />
 				<Route path="/products" element={<ProductsPage products={products} />} />
 				<Route path="/products/:id" element={<ProductDetail />} />
+				<Route path="/login" element={<LoginPage />} />
+
+				<Route path="*" element={<NotFoundPage />} />
 			</Routes>
 		</Router>
 	);

@@ -7,7 +7,7 @@ const ProductSection = ({ products }) => {
 		<section className="container mx-auto px-4 py-8 grid gap-2">
 			{/* Header */}
 			<div className="text-center mb-8">
-				<h2 className="text-3xl font-bold text-gray-800 mb-2">Produk</h2>
+				<h2 className="text-2xl font-bold text-gray-800 mb-2">Produk</h2>
 			</div>
 
 			<div className="flex justify-between items-center w-full">

@@ -23,27 +23,11 @@ const ProductsCard = ({ product }) => {
 				{/* Content Container */}
 				<div className="p-4 flex flex-col flex-grow">
 					{/* Product Name - Centered and improved spacing */}
-					<h3 className="font-semibold text-lg text-center mb-4 line-clamp-2 hover:line-clamp-none">
-						{product.name}
-					</h3>
+					<h3 className="mb-4 line-clamp-2 hover:line-clamp-none">{product.name}</h3>
 
 					{/* Stock Status */}
 					<div className="mt-auto">
-						{product.stock === "tersedia" ? (
-							<Button
-								variant="ghost"
-								className="w-full bg-green-100/80 text-green-800 hover:bg-green-200/90 text-sm py-3"
-								disabled>
-								🟢 Tersedia
-							</Button>
-						) : (
-							<Button
-								variant="ghost"
-								className="w-full bg-red-100/80 text-red-800 hover:bg-red-200/90 text-sm py-3"
-								disabled>
-								🔴 Habis
-							</Button>
-						)}
+						<p className="text-sm text-blue-500"> Rp {product.price.toLocaleString()}</p>
 					</div>
 				</div>
 			</Link>
