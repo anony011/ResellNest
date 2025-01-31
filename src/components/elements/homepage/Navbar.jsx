@@ -36,7 +36,9 @@ const Navbar = () => {
 			{/* Ikon User dan Keranjang */}
 			<span className="flex gap-3 items-center justify-center">
 				{/* Ikon User */}
-				<a className="hover:scale-110 transition-transform duration-200" href="/login">
+				<a
+					className="hover:scale-110 transition-transform duration-200"
+					href="https://waroengku-be-production.up.railway.app/admin/login">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"

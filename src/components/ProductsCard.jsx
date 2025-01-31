@@ -27,9 +27,10 @@ const ProductsCard = ({ product }) => {
 					{/* Stock Status */}
 					<div className="mt-auto">
 						<p className="text-sm text-blue-500 font-semibold">
-							{new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(
-								product.price
-							)}
+							{new Intl.NumberFormat("id-ID", {
+								style: "currency",
+								currency: "IDR",
+							}).format(product.price)}
 						</p>
 					</div>
 				</div>
