@@ -22,7 +22,7 @@ const ProductSection = ({ products }) => {
 			{isLoading ? (
 				<div className="h-[30rem] flex items-center justify-center">
 					<p className="text-gray-700">
-						{products == null ? "Belum Ada Produk" : "Tunggu sebentar..."}
+						{products == null || products == undefined ? "Belum Ada Produk" : "Tunggu sebentar..."}
 					</p>
 				</div>
 			) : (
