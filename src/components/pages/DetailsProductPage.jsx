@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import ProductsCard from "@/components/ProductsCard";
 import Skeleton from "@/components/Skeleton";
-import axios from "axios";
+import axios from "../../api/axios";
 
 // const products = [
 // 	{
@@ -58,6 +58,7 @@ import axios from "axios";
 const ItemDetail = () => {
 	const { slug } = useParams();
 	const [product, setProduct] = useState([]);
+	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
@@ -77,14 +78,13 @@ const ItemDetail = () => {
 	}, [slug]);
 
 	useEffect(() => {
-		const fetchPosts = async () => {
+		const fetchProduct = async () => {
 			setLoading(true);
-			setProduct(null);
-			await new Promise((resolve) => setTimeout(resolve, 1000));
-
 			try {
-				const response = await axios.get(`api/product/${slug}`);
+				const response = await axios.get(`/api/product/${slug}`);
+				const responseAll = await axios.get(`/api/products`);
 				setProduct(response.data.data);
+				setProducts(responseAll.data.data);
 			} catch (error) {
 				console.error("Gagal mengambil data:", error);
 			} finally {
@@ -92,13 +92,8 @@ const ItemDetail = () => {
 			}
 		};
 
-		fetchPosts();
+		fetchProduct();
 	}, [slug]);
-
-	useEffect(() => {
-		console.log(product);
-		console.log(slug);
-	}, [product, slug]);
 
 	if (loading) {
 		return <Skeleton />;
@@ -196,7 +191,7 @@ const ItemDetail = () => {
 											</p>
 										</div>
 										<span className="bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium">
-											{product.item === 1 ? "🟢 Tersedia" : "🔴 Habis"}
+											{product.status === 1 ? "🟢 Tersedia" : "🔴 Habis"}
 										</span>
 									</div>
 								</div>
@@ -218,7 +213,7 @@ const ItemDetail = () => {
 								</span>
 							</div>
 
-							{item.stock === "tersedia" && (
+							{product.status === 1 && (
 								<a
 									href={`https://wa.me/${
 										import.meta.env.VITE_WHATSAPP_NUMBER
@@ -240,17 +235,19 @@ const ItemDetail = () => {
 				</div>
 
 				{/* Related Products Section */}
-				<div className="mb-12">
-					<h2 className="text-2xl font-bold text-gray-900 mb-6">Produk Terkait</h2>
-					<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-						{products
-							.filter((p) => p.id !== item.id)
-							.slice(0, 4)
-							.map((product) => (
-								<ProductsCard key={product.id} product={product} />
-							))}
+				{products.length > 5 && (
+					<div className="mb-12">
+						<h2 className="text-2xl font-bold text-gray-900 mb-6">Produk Terkait</h2>
+						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+							{products
+								.filter((p) => p.id !== product.id)
+								.slice(0, 4)
+								.map((product) => (
+									<ProductsCard key={product.id} product={product} />
+								))}
+						</div>
 					</div>
-				</div>
+				)}
 			</div>
 		</div>
 	);
