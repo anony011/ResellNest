@@ -5,7 +5,7 @@ import Footer from "@/components/elements/homepage/Footer";
 import AboutSection from "@/components/elements/homepage/AboutSection";
 import ScrollToTopButton from "../elements/ScrollToTopButton";
 
-export default function HomePage({ products, services }) {
+export default function HomePage({ products }) {
 	return (
 		<>
 			{/* NAVBAR */}

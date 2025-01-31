@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import ProductsCard from "@/components/ProductsCard";
 import Skeleton from "@/components/Skeleton";
@@ -60,11 +60,6 @@ const ItemDetail = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
-	const navigate = useNavigate();
-	const goBack = () => {
-		navigate(-1);
-	};
-
 	const scrollToTopCompat = () => {
 		try {
 			window.scrollTo({
@@ -121,7 +116,7 @@ const ItemDetail = () => {
 	return (
 		<div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
 			<div className="flex justify-between items-center mb-8">
-				<button onClick={goBack} className="flex items-center text-black">
+				<Link to={"/products"} className="flex items-center text-black">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						className="h-6 w-6 mr-2"
@@ -135,7 +130,7 @@ const ItemDetail = () => {
 							d="M10 19l-7-7m0 0l7-7m-7 7h18"
 						/>
 					</svg>
-				</button>
+				</Link>
 				<h1 className="text-xl font-bold text-gray-800">Detail Produk</h1>
 				{/* Ikon User */}
 				<Link className="hover:scale-110 transition-transform duration-200" to={"/"}>

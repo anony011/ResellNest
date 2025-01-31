@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import ProductsCard from "@/components/ProductsCard";
@@ -8,26 +8,73 @@ import { motion, AnimatePresence } from "framer-motion";
 const ProductsPage = ({ products }) => {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [filteredProducts, setFilteredProducts] = useState(products);
+	const [currentPage, setCurrentPage] = useState(1);
+	const itemsPerPage = 10;
+
+	// Sync filteredProducts dengan products prop
+	useEffect(() => {
+		setFilteredProducts(products);
+	}, [products]);
 
 	const handleSearch = () => {
-		if (!searchQuery.trim()) {
+		const query = searchQuery.trim().toLowerCase(); // Optimasi pencarian
+		if (!query) {
 			setFilteredProducts(products);
+			setCurrentPage(1);
 			return;
 		}
 
 		const filtered = products.filter(
 			(product) =>
-				product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-				product.description?.toLowerCase().includes(searchQuery.toLowerCase())
+				product.name.toLowerCase().includes(query) ||
+				product.description?.toLowerCase().includes(query)
 		);
 
 		setFilteredProducts(filtered);
+		setCurrentPage(1);
 	};
 
+	// Fungsi untuk menangani pencarian saat tombol Enter ditekan
 	const handleKeyPress = (e) => {
 		if (e.key === "Enter") {
 			handleSearch();
 		}
+	};
+
+	// Menghitung indeks produk yang akan ditampilkan
+	const indexOfLastItem = currentPage * itemsPerPage;
+	const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+	const currentItems = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
+
+	// Menghitung total halaman
+	const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+
+	// Fungsi untuk mengganti halaman
+	const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+	// Fungsi untuk navigasi ke halaman sebelumnya
+	const goToPreviousPage = () => {
+		if (currentPage > 1) {
+			setCurrentPage(currentPage - 1);
+		}
+	};
+
+	// Fungsi untuk navigasi ke halaman selanjutnya
+	const goToNextPage = () => {
+		if (currentPage < totalPages) {
+			setCurrentPage(currentPage + 1);
+		}
+	};
+	const getVisiblePages = () => {
+		const maxVisible = 5;
+		let start = Math.max(currentPage - 2, 1);
+		let end = Math.min(start + maxVisible - 1, totalPages);
+
+		if (end - start < maxVisible - 1) {
+			start = Math.max(end - maxVisible + 1, 1);
+		}
+
+		return Array.from({ length: end - start + 1 }, (_, i) => start + i);
 	};
 
 	return (
@@ -49,7 +96,6 @@ const ProductsPage = ({ products }) => {
 					</svg>
 				</Link>
 				<h1 className="text-xl font-bold text-gray-800">Semua Produk</h1>
-				{/* Ikon User */}
 				<Link className="hover:scale-110 transition-transform duration-200" to={"/"}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -86,8 +132,8 @@ const ProductsPage = ({ products }) => {
 
 			<div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
 				<AnimatePresence mode="wait">
-					{filteredProducts.length > 0 ? (
-						filteredProducts.map((product) => (
+					{currentItems.length > 0 ? (
+						currentItems.map((product) => (
 							<motion.div
 								key={product.id}
 								initial={{ opacity: 0, y: 20 }}
@@ -108,6 +154,39 @@ const ProductsPage = ({ products }) => {
 					)}
 				</AnimatePresence>
 			</div>
+
+			{/* Pagination - Hanya ditampilkan jika totalPages > 1 */}
+			{totalPages > 1 && (
+				<div className="flex justify-center items-center gap-2 mt-8">
+					<Button
+						onClick={goToPreviousPage}
+						disabled={currentPage === 1}
+						className="px-4 py-2 rounded-lg"
+						variant="outline">
+						Sebelumnya
+					</Button>
+
+					{getVisiblePages().map((page) => (
+						<Button
+							key={page}
+							onClick={() => paginate(page)}
+							className={`px-4 py-2 rounded-lg ${
+								currentPage === page ? "bg-blue-600 text-white" : "bg-gray-200 hover:bg-gray-300"
+							}`}
+							aria-current={currentPage === page ? "page" : undefined}>
+							{page}
+						</Button>
+					))}
+
+					<Button
+						onClick={goToNextPage}
+						disabled={currentPage === totalPages}
+						className="px-4 py-2 rounded-lg"
+						variant="outline">
+						Selanjutnya
+					</Button>
+				</div>
+			)}
 		</div>
 	);
 };

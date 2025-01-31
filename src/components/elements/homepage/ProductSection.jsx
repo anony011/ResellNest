@@ -24,9 +24,11 @@ const ProductSection = ({ products }) => {
 
 			{/* Grid Produk */}
 			<div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-				{products.slice(0, 4).map((product) => (
-					<ProductsCard key={product.id} product={product} />
-				))}
+				{products.length > 4
+					? products
+							.slice(0, 4)
+							.map((product) => <ProductsCard key={product.id} product={product} />)
+					: products.map((product) => <ProductsCard key={product.id} product={product} />)}
 			</div>
 		</section>
 	);
