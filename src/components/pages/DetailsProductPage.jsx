@@ -3,60 +3,61 @@ import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import ProductsCard from "@/components/ProductsCard";
 import Skeleton from "@/components/Skeleton";
+import axios from "axios";
 
-const products = [
-	{
-		id: 1,
-		name: "Sudah ready paket hampers mayora 138k",
-		price: 10000,
-		description: "Paket hampers mayora sudah ready stock, harga 138k",
-		img: "https://vignette.vivathemes.com/wp-content/uploads/2022/10/olena-sergienko-gxKL334bUK4-unsplash-800x800.jpg",
-		stock: "tersedia",
-	},
-	{
-		id: 2,
-		name: "Product 2",
-		price: 20000,
-		description: "Paket hampers mayora sudah ready stock, harga 138k",
-		img: "https://vignette.vivathemes.com/wp-content/uploads/2022/10/olena-sergienko-gxKL334bUK4-unsplash-800x800.jpg",
-		stock: "tersedia",
-	},
-	{
-		id: 3,
-		name: "Product 2",
-		price: 20000,
-		description: "Paket hampers mayora sudah ready stock, harga 138k",
-		img: "https://vignette.vivathemes.com/wp-content/uploads/2022/10/olena-sergienko-gxKL334bUK4-unsplash-800x800.jpg",
-		stock: "tersedia",
-	},
-	{
-		id: 4,
-		name: "Product 2",
-		price: 20000,
-		description: "Paket hampers mayora sudah ready stock, harga 138k",
-		img: "https://vignette.vivathemes.com/wp-content/uploads/2022/10/olena-sergienko-gxKL334bUK4-unsplash-800x800.jpg",
-	},
-	{
-		id: 5,
-		name: "Product 2",
-		price: 20000,
-		description: "Paket hampers mayora sudah ready stock, harga 138k",
-		img: "https://vignette.vivathemes.com/wp-content/uploads/2022/10/olena-sergienko-gxKL334bUK4-unsplash-800x800.jpg",
-		stock: "tidak tersedia",
-	},
-	{
-		id: 6,
-		name: "Product 2",
-		price: 20000,
-		description: "Paket hampers mayora sudah ready stock, harga 138k",
-		img: "https://vignette.vivathemes.com/wp-content/uploads/2022/10/olena-sergienko-gxKL334bUK4-unsplash-800x800.jpg",
-		stock: "tersedia",
-	},
-];
+// const products = [
+// 	{
+// 		id: 1,
+// 		name: "Sudah ready paket hampers mayora 138k",
+// 		price: 10000,
+// 		description: "Paket hampers mayora sudah ready stock, harga 138k",
+// 		img: "https://vignette.vivathemes.com/wp-content/uploads/2022/10/olena-sergienko-gxKL334bUK4-unsplash-800x800.jpg",
+// 		stock: "tersedia",
+// 	},
+// 	{
+// 		id: 2,
+// 		name: "Product 2",
+// 		price: 20000,
+// 		description: "Paket hampers mayora sudah ready stock, harga 138k",
+// 		img: "https://vignette.vivathemes.com/wp-content/uploads/2022/10/olena-sergienko-gxKL334bUK4-unsplash-800x800.jpg",
+// 		stock: "tersedia",
+// 	},
+// 	{
+// 		id: 3,
+// 		name: "Product 2",
+// 		price: 20000,
+// 		description: "Paket hampers mayora sudah ready stock, harga 138k",
+// 		img: "https://vignette.vivathemes.com/wp-content/uploads/2022/10/olena-sergienko-gxKL334bUK4-unsplash-800x800.jpg",
+// 		stock: "tersedia",
+// 	},
+// 	{
+// 		id: 4,
+// 		name: "Product 2",
+// 		price: 20000,
+// 		description: "Paket hampers mayora sudah ready stock, harga 138k",
+// 		img: "https://vignette.vivathemes.com/wp-content/uploads/2022/10/olena-sergienko-gxKL334bUK4-unsplash-800x800.jpg",
+// 	},
+// 	{
+// 		id: 5,
+// 		name: "Product 2",
+// 		price: 20000,
+// 		description: "Paket hampers mayora sudah ready stock, harga 138k",
+// 		img: "https://vignette.vivathemes.com/wp-content/uploads/2022/10/olena-sergienko-gxKL334bUK4-unsplash-800x800.jpg",
+// 		stock: "tidak tersedia",
+// 	},
+// 	{
+// 		id: 6,
+// 		name: "Product 2",
+// 		price: 20000,
+// 		description: "Paket hampers mayora sudah ready stock, harga 138k",
+// 		img: "https://vignette.vivathemes.com/wp-content/uploads/2022/10/olena-sergienko-gxKL334bUK4-unsplash-800x800.jpg",
+// 		stock: "tersedia",
+// 	},
+// ];
 
 const ItemDetail = () => {
-	const { id } = useParams();
-	const [item, setItem] = useState(null);
+	const { slug } = useParams();
+	const [product, setProduct] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
@@ -73,30 +74,31 @@ const ItemDetail = () => {
 
 	useEffect(() => {
 		scrollToTopCompat();
-	}, [id]);
+	}, [slug]);
 
 	useEffect(() => {
-		const fetchItem = async () => {
-			try {
-				setLoading(true);
-				setItem(null);
-				await new Promise((resolve) => setTimeout(resolve, 1000));
+		const fetchPosts = async () => {
+			setLoading(true);
+			setProduct(null);
+			await new Promise((resolve) => setTimeout(resolve, 1000));
 
-				const product = products.find((p) => p.id === parseInt(id));
-				if (product) {
-					setItem(product);
-				} else {
-					throw new Error("Item tidak ditemukan");
-				}
-			} catch (err) {
-				setError(err.message);
+			try {
+				const response = await axios.get(`api/product/${slug}`);
+				setProduct(response.data.data);
+			} catch (error) {
+				console.error("Gagal mengambil data:", error);
 			} finally {
 				setLoading(false);
 			}
 		};
 
-		fetchItem();
-	}, [id]);
+		fetchPosts();
+	}, [slug]);
+
+	useEffect(() => {
+		console.log(product);
+		console.log(slug);
+	}, [product, slug]);
 
 	if (loading) {
 		return <Skeleton />;
@@ -158,11 +160,11 @@ const ItemDetail = () => {
 						animate={{ opacity: 1, x: 0 }}
 						className="relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow overflow-hidden aspect-square">
 						<img
-							src={item.img}
-							alt={item.name}
+							src={product.thumbnail}
+							alt={product.name}
 							className="w-full h-full object-cover object-center"
 						/>
-						{item.stock !== "tersedia" && (
+						{product.status !== 1 && (
 							<div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1.5 rounded-full text-sm font-medium shadow-md z-10">
 								Stok Habis
 							</div>
@@ -174,10 +176,10 @@ const ItemDetail = () => {
 						initial={{ opacity: 0, x: 20 }}
 						animate={{ opacity: 1, x: 0 }}
 						className="bg-white p-8 rounded-2xl shadow-lg">
-						<h1 className="text-2xl font-bold text-gray-900 mb-4">{item.name}</h1>
+						<h1 className="text-2xl font-bold text-gray-900 mb-4">{product.name}</h1>
 
 						<div className="mb-8">
-							<p className="text-gray-600">{item.description}</p>
+							<p className="text-gray-600">{product.description}</p>
 						</div>
 
 						<div className="grid gap-5 lg:gap-8">
@@ -187,11 +189,14 @@ const ItemDetail = () => {
 									<div className="flex justify-between items-center">
 										<div>
 											<p className="text-xl font-bold text-blue-600">
-												Rp {item.price.toLocaleString()}
+												{new Intl.NumberFormat("id-ID", {
+													style: "currency",
+													currency: "IDR",
+												}).format(product.price)}
 											</p>
 										</div>
 										<span className="bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium">
-											{item.stock === "tersedia" ? "🟢 Tersedia" : "🔴 Habis"}
+											{product.item === 1 ? "🟢 Tersedia" : "🔴 Habis"}
 										</span>
 									</div>
 								</div>
@@ -203,7 +208,7 @@ const ItemDetail = () => {
 									<dl className="grid grid-cols-2 gap-4 ">
 										<div>
 											<dt className="text-sm text-gray-500">ID Produk</dt>
-											<dd className="font-medium text-gray-900">#{item.id}</dd>
+											<dd className="font-medium text-gray-900">#{product.id}</dd>
 										</div>
 										<div>
 											<dt className="text-sm text-gray-500">Kategori</dt>
@@ -218,7 +223,7 @@ const ItemDetail = () => {
 									href={`https://wa.me/${
 										import.meta.env.VITE_WHATSAPP_NUMBER
 									}?text=${encodeURIComponent(
-										`Permisi kak, untuk produk ${item.name} apakah masih ada?`
+										`Permisi kak, untuk produk ${product.name} apakah masih ada?`
 									)}`}
 									target="_blank"
 									rel="noopener noreferrer">

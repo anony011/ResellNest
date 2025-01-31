@@ -5,19 +5,11 @@ const instance = axios.create({
 	headers: {
 		Accept: "application/json",
 		"Content-Type": "application/json",
+		"Cache-Control": "no-store",
 	},
 });
 
 instance.interceptors.request.use((config) => {
-	const token = document.cookie
-		.split("; ")
-		.find((row) => row.startsWith("XSRF-TOKEN="))
-		?.split("=")[1];
-
-	if (token) {
-		config.headers["X-XSRF-TOKEN"] = decodeURIComponent(token);
-	}
-
 	const apiKey = import.meta.env.VITE_API_KEY;
 	if (apiKey) {
 		config.headers["X-API-KEY"] = apiKey;

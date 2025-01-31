@@ -438,6 +438,7 @@ function App() {
 			try {
 				const response = await axios.get("api/products");
 				setProducts(response.data.data);
+				console.log(response.data.data);
 			} catch (error) {
 				console.error("Gagal mengambil data:", error);
 			}
@@ -451,7 +452,7 @@ function App() {
 			<Routes>
 				<Route path="/" element={<HomePage products={products} />} />
 				<Route path="/products" element={<ProductsPage products={products} />} />
-				<Route path="/products/:id" element={<ProductDetail />} />
+				<Route path="/products/:slug" element={<ProductDetail />} />
 
 				<Route path="*" element={<NotFoundPage />} />
 			</Routes>
