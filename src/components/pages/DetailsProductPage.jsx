@@ -154,11 +154,26 @@ const ItemDetail = () => {
 						initial={{ opacity: 0, x: -20 }}
 						animate={{ opacity: 1, x: 0 }}
 						className="relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow overflow-hidden aspect-square">
-						<img
-							src={product.thumbnail}
-							alt={product.name}
-							className="w-full h-full object-cover object-center"
-						/>
+						{product.thumbnail == null ? (
+							<>
+								<div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center space-y-2">
+									<p className="text-white">Gambar Tidak Tersedia</p>
+								</div>
+								<img
+									src={
+										"https://images.unsplash.com/photo-1601724161617-928285222d5b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+									}
+									alt={"unsplash"}
+									className="w-full h-full object-cover"
+								/>
+							</>
+						) : (
+							<img
+								src={product.thumbnail}
+								alt={product.name}
+								className="w-full h-full object-cover object-center"
+							/>
+						)}
 						{product.status !== 1 && (
 							<div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1.5 rounded-full text-sm font-medium shadow-md z-10">
 								Stok Habis
@@ -184,7 +199,7 @@ const ItemDetail = () => {
 								<p className="text-sm text-gray-500 mb-2">Varian</p>
 								<div className="grid grid-cols-3 gap-2">
 									{product.variants.map((variant, id) => (
-										<div key={id} className="bg-gray-50 p-2 rounded-lg text-center border">
+										<div key={id} className="bg-gray-50 py-1 rounded-lg text-center border">
 											<p className="text-gray-600 text-xs">{variant.variants}</p>
 										</div>
 									))}
