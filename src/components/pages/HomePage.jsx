@@ -2,7 +2,6 @@ import Navbar from "@/components/elements/homepage/Navbar";
 import HeroSection from "@/components/elements/homepage/HeroSection";
 import ProductSection from "@/components/elements/homepage/ProductSection";
 import Footer from "@/components/elements/homepage/Footer";
-import AboutSection from "@/components/elements/homepage/AboutSection";
 import ScrollToTopButton from "../elements/ScrollToTopButton";
 
 export default function HomePage({ products }) {
@@ -15,10 +14,6 @@ export default function HomePage({ products }) {
 			{/* HERO SECTION */}
 			<HeroSection />
 			{/* END HERO SECTION */}
-
-			{/* ABOUT */}
-			<AboutSection />
-			{/* END ABOUT */}
 
 			{/* PRODUCTS */}
 			<div id="product">

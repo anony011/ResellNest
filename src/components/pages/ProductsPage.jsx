@@ -149,7 +149,7 @@ const ProductsPage = ({ products }) => {
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							transition={{ duration: 0.5 }}>
-							<p className="text-xl font-semibold text-gray-500">Barang tidak ditemukan Boss..</p>
+							<p className="text-xl font-semibold text-gray-500">Barang Tidak Tersedia</p>
 						</motion.div>
 					)}
 				</AnimatePresence>

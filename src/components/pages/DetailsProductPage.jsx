@@ -57,7 +57,7 @@ import axios from "../../api/axios";
 
 const ItemDetail = () => {
 	const { slug } = useParams();
-	const [product, setProduct] = useState([]);
+	const [product, setProduct] = useState({});
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -129,7 +129,7 @@ const ItemDetail = () => {
 					</svg>
 				</Link>
 				<h1 className="text-xl font-bold text-gray-800">Detail Produk</h1>
-				{/* Ikon User */}
+				{/* Ikon Home */}
 				<Link className="hover:scale-110 transition-transform duration-200" to={"/"}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -171,11 +171,26 @@ const ItemDetail = () => {
 						initial={{ opacity: 0, x: 20 }}
 						animate={{ opacity: 1, x: 0 }}
 						className="bg-white p-8 rounded-2xl shadow-lg">
-						<h1 className="text-2xl font-bold text-gray-900 mb-4">{product.name}</h1>
+						<h1 className="text-2xl font-bold text-gray-900 mb-4">
+							{product.name.charAt(0).toUpperCase() + product.name.slice(1)}
+						</h1>
 
 						<div className="mb-8">
 							<p className="text-gray-600">{product.description}</p>
 						</div>
+
+						{product.variants && (
+							<div className="w-full mb-2">
+								<p className="text-sm text-gray-500 mb-2">Varian</p>
+								<div className="grid grid-cols-3 gap-2">
+									{product.variants.map((variant, id) => (
+										<div key={id} className="bg-gray-50 p-2 rounded-lg text-center border">
+											<p className="text-gray-600 text-xs">{variant.variants}</p>
+										</div>
+									))}
+								</div>
+							</div>
+						)}
 
 						<div className="grid gap-5 lg:gap-8">
 							<span>
@@ -183,14 +198,14 @@ const ItemDetail = () => {
 								<div className="bg-blue-50 p-6 rounded-xl">
 									<div className="flex justify-between items-center">
 										<div>
-											<p className="text-xl font-bold text-blue-600">
+											<p className="text-lg font-bold text-blue-600">
 												{new Intl.NumberFormat("id-ID", {
 													style: "currency",
 													currency: "IDR",
 												}).format(product.price)}
 											</p>
 										</div>
-										<span className="bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium">
+										<span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
 											{product.status === 1 ? "🟢 Tersedia" : "🔴 Habis"}
 										</span>
 									</div>

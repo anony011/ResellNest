@@ -20,9 +20,11 @@ const ProductsCard = ({ product }) => {
 				</div>
 
 				{/* Content Container */}
-				<div className="p-4 flex flex-col flex-grow">
+				<div className="p-2 flex flex-col flex-grow">
 					{/* Product Name - Centered and improved spacing */}
-					<h3 className="mb-4 line-clamp-2 hover:line-clamp-none">{product.name}</h3>
+					<h3 className="mb-4 line-clamp-2 hover:line-clamp-none text-gray-800 font-semibold text-sm">
+						{product.name.charAt(0).toUpperCase() + product.name.slice(1)}
+					</h3>
 
 					{/* Stock Status */}
 					<div className="mt-auto">

@@ -29,7 +29,7 @@ const HeroSection = () => {
 					transition={{ duration: 0.8, delay: 0.2 }}>
 					Kami hadir untuk memenuhi segala kebutuhan Anda! Kami menyediakan beragam barang
 					berkualitas yang mungkin sedang Anda cari dan butuhkan saat ini. Temukan solusi belanja
-					praktis dan terpercaya hanya di Waroengku!
+					praktis dan terpercaya hanya di Waroengku! "(Khusus untuk area kebumen saja)"
 				</motion.p>
 				<motion.div
 					initial={{ opacity: 0, scale: 0.8 }}
