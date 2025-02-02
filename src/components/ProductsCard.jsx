@@ -12,8 +12,8 @@ const ProductsCard = ({ product }) => {
 				{/* Image Container */}
 				<div className="aspect-square w-full overflow-hidden relative">
 					{product.status !== 1 && (
-						<div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center space-y-2">
-							<p className="text-white text-xl font-medium">Stok Habis</p>
+						<div className="absolute top-2 right-0.5 bg-red-500 text-white px-3 py-1.5 rounded-full text-sm font-medium shadow-md z-10">
+							Stok Habis
 						</div>
 					)}
 
@@ -33,7 +33,7 @@ const ProductsCard = ({ product }) => {
 						/>
 					) : (
 						<img
-							src={product.thumbnail}
+							src={`https://res.cloudinary.com/draer5efs/image/upload/v1738468518/${product.thumbnail}.png`}
 							alt={product.name}
 							className="w-full h-full object-cover"
 						/>

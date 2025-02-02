@@ -169,7 +169,7 @@ const ItemDetail = () => {
 							</>
 						) : (
 							<img
-								src={product.thumbnail}
+								src={`https://res.cloudinary.com/draer5efs/image/upload/v1738468518/${product.thumbnail}.png`}
 								alt={product.name}
 								className="w-full h-full object-cover object-center"
 							/>
